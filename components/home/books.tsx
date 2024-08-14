@@ -1,7 +1,25 @@
+'use client'
+
 import CardBook from "@/components/card-book"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
+import bookApi from '@/app/api/books-api'
+import { useState, useEffect } from 'react'
+import { CardBookModel } from "@/app/types/card-book-model"
+
 
 export default function Books() {
+  const [books, setBooks] = useState<CardBookModel[]>([])
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await bookApi.getBooks()
+        setBooks(response?.data?.items)
+      } catch (error) {
+        console.log('Failed to fetch books: ', error)
+      }
+    }
+    fetchBooks()
+  }, [])
   return (
     <section>
       <div className='pt-10 max-w-6xl mx-auto '>
@@ -11,28 +29,12 @@ export default function Books() {
           <ChevronDownIcon className="h-8 w-6" />
         </div>
         <div className="md:mb-0 flex flex-row items-center flex-1 gap-3 w-full flex-wrap px-1 pt-2" data-aos="fade-up">
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          <div className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-            <CardBook title='Con ghẹ bị luộc chín' image_url={'https://firebasestorage.googleapis.com/v0/b/g2store-956cf.appspot.com/o/bookexample.jpg?alt=media&token=f2d0219a-a700-4cfd-98d8-57d79d397d85'} />
-          </div>
-          
+          {Array.isArray(books) && books.length > 0 && books.map((book, index) => (
+            <div key={index} className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
+              <CardBook title={book?.name} slug={book?.slug}
+                image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

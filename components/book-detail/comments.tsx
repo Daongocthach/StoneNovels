@@ -1,4 +1,3 @@
-import image from '@/public/images/bookexample.jpg'
 import Image from 'next/image'
 function Comments() {
     return (
@@ -11,28 +10,17 @@ function Comments() {
                         <div className="space-y-6">
                             <div className="flex flex-row items-center">
                                 <div className="relative flex-shrink-0">
-                                    <Image src={image} alt="Review" className="h-12 w-12 rounded-full object-cover" />
+                                    <div className="h-12 w-12 rounded-full object-cover bg-gray-500 flex flex-row items-center justify-center">
+                                        <p className='text-3xl font-bold'>D</p>
+                                    </div>
                                     <div className="absolute right-[-30px] top-4 w-4 h-4 bg-dark-500 transform rotate-45"></div>
                                 </div>
                                 <div className="bg-dark-500 rounded-xl p-4">
-                                    <h6 className="text-white font-semibold mb-2">Chris Curry - <span className="text-gray-400 font-normal">1 Hour ago</span></h6>
-                                    <p className="text-gray-400 text-sm">whachikan Just noticed that someone categorized this as belonging to the genre "demons" LOL</p>
+                                    <h6 className="text-white font-semibold mb-2">Nguyễn Du - <span className="text-gray-400 font-normal">1 Giờ trước</span></h6>
+                                    <p className="text-gray-400 text-sm">Truyện hay</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="space-y-6">
-                            <div className="flex flex-row items-center">
-                                <div className="relative flex-shrink-0">
-                                    <Image src={image} alt="Review" className="h-12 w-12 rounded-full object-cover" />
-                                    <div className="absolute right-[-30px] top-4 w-4 h-4 bg-dark-500 transform rotate-45"></div>
-                                </div>
-                                <div className="bg-dark-500 rounded-xl p-4">
-                                    <h6 className="text-white font-semibold mb-2">Chris Curry - <span className="text-gray-400 font-normal">1 Hour ago</span></h6>
-                                    <p className="text-gray-400 text-sm">whachikan Just noticed that someone categorized this as belonging to the genre "demons" LOL</p>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div className="lg:col-span-2">

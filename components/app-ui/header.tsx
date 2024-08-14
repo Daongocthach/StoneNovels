@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import MobileMenu from './mobile-menu'
 import image from '@/public/images/removeBackground.png'
-import DropdownMenu from '@/components/dropdown-menu'
+import Search from '@/components/app-ui/search'
+import BoardBar from '@/components/app-ui/board-bar'
 
 export default function Header() {
   return (
-    <header className="absolute w-full z-30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <header className="absolute w-full z-30 ">
+      <div className="max-w-6xl mx-auto sm:px-6 px-2 lg:px-0">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
           <div className="shrink-0 mr-4">
@@ -24,39 +25,13 @@ export default function Header() {
                 </defs>
               </svg>
               <h3 className='text-3xl text-gradient'>Stone Novels</h3>
+              <Search />
             </Link>
           </div>
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow ">
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
-              <li>
-                <DropdownMenu/>
-              </li>
-              <li>
-                <Link
-                  href="/books-library"
-                  className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                >
-                  Thư viện
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/follow"
-                  className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                >
-                  Theo dõi
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/history"
-                  className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                >
-                  Vừa xem
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/signin"
@@ -75,10 +50,14 @@ export default function Header() {
               </li>
             </ul>
           </nav>
-
           <MobileMenu />
-
         </div>
+      </div>
+      <div className="w-full bg-gray-800">
+        <nav className="max-w-6xl sm:px-6 px-2 lg:px-0 mx-auto hidden md:flex md:grow ">
+          {/* Desktop sign in links */}
+          <BoardBar />
+        </nav>
       </div>
     </header>
   )
