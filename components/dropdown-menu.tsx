@@ -4,9 +4,12 @@ import { ChevronDownIcon } from "@radix-ui/react-icons"
 import categoryApi from "@/app/api/category-api"
 import { useState, useEffect } from "react"
 import { Category } from "@/app/types/category"
+import { useRouter } from 'next/navigation'
 
 export default function DropdownMenu() {
+    const router = useRouter()
     const [categories, setCategories] = useState<Category[]>([])
+    const [open, setOpen] = useState(false)
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -19,8 +22,13 @@ export default function DropdownMenu() {
         }
         fetchCategories()
     }, [])
+
+    const handleClick = (slug: string) => {
+        router.push(`/books-category/${slug}`)
+        setOpen(false)
+    }
     return (
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <div
                     className="text-lg font-medium text-orange-500 hover:text-gray-300 py-3 flex items-center transition duration-150 ease-in-out mr-3 gap-2"
@@ -33,9 +41,9 @@ export default function DropdownMenu() {
                 <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
                     {(Array.isArray(categories) && categories.length > 0) ?
                         categories.map((category: Category, index: number) => (
-                            <div key={index} className="space-y-2" >
-                                <p className="text-sm text-muted-foreground">
-                                    {category.name}
+                            <div key={index} className="space-y-2 cursor-pointer" onClick={() => handleClick(category?.slug)}>
+                                <p className="text-sm text-muted-foreground hover:text-orange-100">
+                                    {category?.name}
                                 </p>
                             </div>
                         ))

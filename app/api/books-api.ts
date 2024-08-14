@@ -8,7 +8,7 @@ const bookApi = {
         const url = `danh-sach/${status}?page=${page}`
         return axiosClient.get(url)
     },
-    getBookByCategory(category: string, page: number) {
+    getBooksByCategory(category: string, page: number) {
         const url = `the-loai/${category}?page=${page}`
         return axiosClient.get(url)
     },
@@ -20,8 +20,8 @@ const bookApi = {
         const url = `truyen-tranh/${slug}/chuong`
         return axiosClient.get(url)
     },
-    searchBooks(keyword: string) {
-        const url = `tim-kiem?keyword=${keyword}`
+    searchBooks(keyword: string, page: number) {
+        const url = `tim-kiem?keyword=${keyword}&page=${page}`
         return axiosClient.get(url)
     }
         

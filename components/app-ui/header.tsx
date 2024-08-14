@@ -10,9 +10,9 @@ export default function Header() {
       <div className="max-w-6xl mx-auto sm:px-6 px-2 lg:px-0">
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
-          <div className="shrink-0 mr-4">
+          <div className="shrink-0 flex flex-row items-center">
             {/* Logo */}
-            <Link href="/" className="flex flex-row gap-2 items-center" aria-label="Cruip">
+            <Link href="/" className="flex flex-row gap-2 items-center mr-4" aria-label="Cruip">
               <svg className="w-14 h-14" viewBox="0 0 92 93" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M89.5 46.5C89.5 70.8261 69.999 90.5 46 90.5C22.001 90.5 2.5 70.8261 2.5 46.5C2.5 22.1739 22.001 2.5 46 2.5C69.999 2.5 89.5 22.1739 89.5 46.5Z" stroke="url(#paint0_linear_1_90)" strokeWidth="5" />
                 <image x="21" y="21" width="50" height="50" href={image.src} />
@@ -24,9 +24,11 @@ export default function Header() {
                   </linearGradient>
                 </defs>
               </svg>
-              <h3 className='text-3xl text-gradient'>Stone Novels</h3>
-              <Search />
+              <h3 className='text-3xl text-gradient text-nowrap'>Stone Novels</h3>
             </Link>
+            <div className='hidden md:flex'>
+              <Search />
+            </div>
           </div>
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow ">

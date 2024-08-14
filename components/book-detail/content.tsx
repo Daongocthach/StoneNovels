@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import ButtonChapter from '@/components/read-book/button-chapter'
+import ButtonChapter from '@/components/book-detail/button-chapter'
 import { Button } from '@/components/ui/button'
 import { ChevronUpIcon } from "@radix-ui/react-icons"
 import { useSearchParams } from 'next/navigation'

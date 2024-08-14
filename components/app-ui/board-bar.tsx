@@ -10,26 +10,26 @@ export default function BoardBar() {
             </li>
             <li>
                 <Link
-                    href="/books-library"
+                    href="/books-category/action"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
-                    Thư viện
+                    Hành động
                 </Link>
             </li>
             <li>
                 <Link
-                    href="/follow"
+                    href="/books-category/xuyen-khong"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
-                    Theo dõi
+                    Xuyên Không
                 </Link>
             </li>
             <li>
                 <Link
-                    href="/history"
+                    href="/books-category/shounen"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
-                    Vừa xem
+                    Thiếu niên
                 </Link>
             </li>
         </ul>

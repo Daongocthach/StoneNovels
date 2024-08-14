@@ -1,6 +1,6 @@
 import { Chapter } from '@/app/types/chapter'
 import { useRouter } from 'next/navigation'
-import Router from 'next/router'
+import { useMemo } from 'react'
 
 interface ChaptersProps {
     chapters: Chapter[],
@@ -13,18 +13,27 @@ function Chapters({ chapters, slug }: ChaptersProps) {
     const handleClick = (chapter: Chapter) => {
         router.push(`/book-detail/${slug}/${chapter.chapter_name}?chapter_api_data=${chapter.chapter_api_data}`)
     }
+    const sortedChapters = useMemo(() => {
+        return [...chapters].sort((a, b) => {
+            const chapterNumberA = parseInt(a.chapter_name.replace(/^\D+/g, ''), 10)
+            const chapterNumberB = parseInt(b.chapter_name.replace(/^\D+/g, ''), 10)
+            return chapterNumberB - chapterNumberA
+        })
+    }, [chapters])
     return (
         <section className="pt-10">
             <hr className="bg-white max-w-6xl mx-auto" />
             <div className="pt-5 max-w-6xl mx-auto px-1 sm:px-6">
                 <h5 className='h4 mb-5'>Danh sách chương</h5>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {Array.isArray(chapters) && chapters.length > 0 && chapters.map((chapter, index) => (
+                    {Array.isArray(sortedChapters) && sortedChapters.length > 0 && sortedChapters.map((chapter, index) => (
                         <ul key={index} className="space-y-2">
                             <li className="text-base relative pl-5 cursor-pointer" onClick={() => handleClick(chapter)}>
                                 <span className="absolute left-0 top-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
-                                <span className="text-gray-400 inline-block w-28">Chương {chapter.chapter_name}: </span>
-                                <span className="text-gray-400 inline-block">{chapter.chapter_title}</span>
+                                <span className="text-gray-400 inline-block w-28">Chương {chapter.chapter_name} </span>
+                                <span className="text-gray-400 inline-block">
+                                    {chapter.chapter_title ? ': ' + chapter?.chapter_title : ''}
+                                </span>
                             </li>
                         </ul>
                     ))}

@@ -33,11 +33,11 @@ function Detail({ slug }: { slug: string }) {
                     <Image src={'https://img.otruyenapi.com/uploads/comics/' + book.thumb_url}
                         alt='image' width={500} height={500} className='w-full brightness-90 mb-2 rounded-md' />
                     <div className='flex gap-2 p-2'>
-                        <button className="btn text-white bg-red-600 hover:bg-red-500 whitespace-nowrap px-4 py-2 text-sm rounded-md">
+                        {/* <button className="btn text-white bg-red-600 hover:bg-red-500 whitespace-nowrap px-4 py-2 text-sm rounded-md">
                             Yêu thích
-                        </button>
+                        </button> */}
                         <button className="btn text-white bg-gray-700 hover:bg-gray-600 px-4 py-2 text-sm lg:w-full rounded-md">
-                            Đọc
+                            Đọc ngay
                         </button>
                     </div>
                 </div>
