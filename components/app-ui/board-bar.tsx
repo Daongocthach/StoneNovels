@@ -6,7 +6,7 @@ export default function BoardBar() {
     return (
         <ul className="flex grow flex-wrap items-center">
             <li>
-                <DropdownMenu />
+                <DropdownMenu isMenu={false}/>
             </li>
             <li>
                 <Link

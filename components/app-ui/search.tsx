@@ -17,7 +17,7 @@ export default function Search() {
         <Input
           type="email"
           placeholder="Tìm kiếm từ khóa..."
-          className="h-10 rounded-full bg-slate-700 border-0"
+          className="h-10 bg-slate-700 border-0"
           value={keyWord}
           onChange={(e) => setKeyWord(e.target.value)}
         />

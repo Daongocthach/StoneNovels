@@ -5,20 +5,25 @@ import bookApi from '@/app/api/books-api'
 import { Book } from '@/app/types/book'
 import Loading from '@/components/loading'
 import Chapters from '@/components/book-detail/chapters'
-function Detail({ slug }: { slug: string }) {
+import { useSearchParams } from 'next/navigation'
+
+function Detail() {
+    const searchParams = useSearchParams()
+    const slug = searchParams.get('slug')
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
     const handleReadMoreToggle = (): void => {
         setIsExpanded(prevState => !prevState)
     }
-
     const [book, setBook] = useState<Book | null>(null)
     useEffect(() => {
         const fetchBook = async () => {
-            try {
-                const response = await bookApi.getBook(slug)
-                setBook(response?.data?.item)
-            } catch (error) {
-                console.log('Failed to fetch book: ', error)
+            if (slug) {
+                try {
+                    const response = await bookApi.getBook(slug)
+                    setBook(response?.data?.item)
+                } catch (error) {
+                    console.log('Failed to fetch book: ', error)
+                }
             }
         }
         fetchBook()
@@ -30,7 +35,7 @@ function Detail({ slug }: { slug: string }) {
         <section className="pt-40">
             <div className=" max-w-6xl mx-auto px-1 sm:px-6 grid grid-cols-1 lg:grid-cols-4 gap-8">
                 <div className="lg:col-span-1">
-                    <Image src={'https://img.otruyenapi.com/uploads/comics/' + book.thumb_url}
+                    <Image unoptimized src={'https://img.otruyenapi.com/uploads/comics/' + book.thumb_url}
                         alt='image' width={500} height={500} className='w-full brightness-90 mb-2 rounded-md' />
                     <div className='flex gap-2 p-2'>
                         {/* <button className="btn text-white bg-red-600 hover:bg-red-500 whitespace-nowrap px-4 py-2 text-sm rounded-md">
@@ -94,7 +99,7 @@ function Detail({ slug }: { slug: string }) {
                     </div>
                 </div>
             </div>
-            {Array.isArray(book.chapters) && book.chapters.length > 0 && <Chapters slug={slug} chapters={book.chapters[0].server_data} />}
+            {Array.isArray(book.chapters) && book.chapters.length > 0 && <Chapters slug={slug || ''} chapters={book.chapters[0].server_data} />}
         </section>
     )
 }

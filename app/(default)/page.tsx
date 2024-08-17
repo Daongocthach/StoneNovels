@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Home - Stone Novels',
-  description: 'Home page of stone novels',
+  title: 'Stone Novels',
+  description: 'Stone Novels là trang web đọc truyện online miễn phí',
 }
 
 import BestCategory from '@/components/home/best-category'

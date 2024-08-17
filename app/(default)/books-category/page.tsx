@@ -1,16 +1,16 @@
 export const metadata = {
-  title: 'Sách theo danh mục',
-  description: 'Trang sách theo danh mục',
+  title: 'Sách theo thể loại',
+  description: 'Trang sách theo thể loại',
 }
 
-import BooksSearch from "@/components/books-search/books-search"
+import BooksCategory from "@/components/books-category/books-category"
 import { Suspense } from "react"
 import Loading from "@/components/loading"
 
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <BooksSearch />
+      <BooksCategory  />
     </Suspense>
 
   )

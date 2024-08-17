@@ -20,4 +20,6 @@ export type Book = {
             chapter_api_data: string
         }[]
     }[]
+    updatedAt: string,
+    chaptersLatest: Chapter[]
 }

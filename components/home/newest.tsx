@@ -30,17 +30,19 @@ export default function Newest() {
         {/* Image */}
         <div className="px-1 w-full" data-aos="fade-up">
           <CarouselListBook>
-            {Array.isArray(books) && books.length > 0 && books.map((book, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
-              >
-                <div className='w-full h-auto max-w-[222px] aspect-[1/1.5] rounded-xl'>
-                  <CardBook title={book?.name} slug={book?.slug}
-                    image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
-                </div>
-              </CarouselItem>
-            ))}
+            {Array.isArray(books) && books.length > 0 && books.map((book, index) => {
+              return (
+                <CarouselItem key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
+                >
+                  <div className='w-full h-auto max-w-[222px] aspect-[1/1.5] rounded-xl'>
+                    <CardBook title={book?.name} slug={book?.slug} updatedAt={book?.updatedAt} chaptersLatest={book?.chaptersLatest}
+                      image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
+                  </div>
+                </CarouselItem>
+              )
+            }
+
+            )}
           </CarouselListBook>
         </div>
       </div>

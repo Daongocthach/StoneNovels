@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import bookApi from '@/app/api/books-api'
 import { Book } from '@/app/types/book'
-import Loading from '@/components/loading'
 import CardBook from '@/components/card-book'
 import {
     Pagination,
@@ -41,9 +40,6 @@ function BooksSearch() {
         }
         fetchBooks()
     }, [keyword, page])
-
-    if (loading) return <Loading />
-    if (!Array.isArray(books) || books.length < 1) return <div>Không tìm thấy sách nào !</div>
 
     const handlePageChange = (newPage: number) => {
         if (newPage > 0 && newPage <= totalPages) {
@@ -99,7 +95,7 @@ function BooksSearch() {
                 <div className="md:mb-0 flex flex-row items-center flex-1 gap-3 w-full flex-wrap px-1 pt-2" data-aos="fade-up">
                     {books.map((book, index) => (
                         <div key={index} className='min-w-[180px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl'>
-                            <CardBook title={book?.name} slug={book?.slug}
+                            <CardBook title={book?.name} slug={book?.slug} updatedAt={book?.updatedAt} chaptersLatest={book?.chaptersLatest}
                                 image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
                         </div>
                     ))}

@@ -1,11 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import ButtonChapter from '@/components/book-detail/button-chapter'
-import { Button } from '@/components/ui/button'
 import { ChevronUpIcon } from "@radix-ui/react-icons"
 import { useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import Image from 'next/image'
+import ButtonChapter from '@/components/chapter/button-chapter'
 
 type ChapterContent = {
     comic_name: string
@@ -21,6 +20,8 @@ type ChapterContent = {
 function Content() {
     const searchParams = useSearchParams()
     const chapter_api_data = searchParams.get('chapter_api_data')
+    const slug = searchParams.get('slug')
+    const chapter_name = searchParams.get('chapter_name')
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -31,7 +32,6 @@ function Content() {
             if (chapter_api_data) {
                 try {
                     const response = await axios.get(chapter_api_data)
-                    console.log(response?.data?.data?.item)
                     setChapterContent(response?.data?.data?.item)
                 } catch (error) {
                     console.log('Failed to fetch chapter content: ', error)
@@ -40,6 +40,7 @@ function Content() {
         }
         fetchChapterContent()
     }, [chapter_api_data])
+
 
     return (
         <section className="pt-40">
@@ -50,25 +51,28 @@ function Content() {
                 <p className="text-gray-400 text-xl block max-w-3xl mb-2 text-center">
                     {'Chương ' + chapterContent?.chapter_name || '1' + ' ' + chapterContent?.chapter_title || 'Loading...'}
                 </p>
+                <ButtonChapter slug={slug || ''} chapter_name={chapter_name || ''} />
                 <hr className="bg-white max-w-6xl w-full mx-auto my-2" />
                 <div className="flex flex-col items-center">
                     {chapterContent?.chapter_image.map((image, index) => (
-                        <div key={index} className="relative w-full h-auto mb-4">
-                            <Image
+                        <div key={index} className="relative w-full h-auto">
+                            <Image unoptimized
                                 src={'https://sv1.otruyencdn.com/' + chapterContent.chapter_path + '/' + image.image_file}
-                                width={700} height={500} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className="w- rounded-xl brightness-90 cursor-pointer" alt="image-book"
+                                width="0"
+                                height="0"
+                                sizes="100vw"
+                                style={{ width: '100%', height: 'auto' }}
+                                alt="image-book"
+                                className='object-contain'
                             />
                         </div>
                     ))}
                 </div>
-                <div className="flex space-x-4 py-4">
-                    <Button variant={'outline'} className='rounded-full' onClick={scrollToTop}>
-                        <ChevronUpIcon className="h-7 w-7" />
-                    </Button>
-                </div>
+                <ChevronUpIcon
+                    className="fixed top-2/3 right-5 h-10 w-10 bg-black rounded-full opacity-40 cursor-pointer"
+                    onClick={scrollToTop} />
                 <hr className="bg-white max-w-6xl w-full mx-auto my-2" />
-                <ButtonChapter />
+                <ButtonChapter slug={slug || ''} chapter_name={chapter_name || ''} />
             </div>
         </section>
     )

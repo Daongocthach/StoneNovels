@@ -1,16 +1,15 @@
 export const metadata = {
-  title: 'Sách theo danh mục',
-  description: 'Trang sách theo danh mục',
+  title: 'Chi tiết sách',
+  description: 'Trang chi tiết sách',
 }
 
-import BooksSearch from "@/components/books-search/books-search"
+import Detail from "@/components/book-detail/detail"
 import { Suspense } from "react"
 import Loading from "@/components/loading"
-
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <BooksSearch />
+      <Detail />
     </Suspense>
 
   )

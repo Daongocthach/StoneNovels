@@ -11,15 +11,9 @@ function Chapters({ chapters, slug }: ChaptersProps) {
     const router = useRouter()
 
     const handleClick = (chapter: Chapter) => {
-        router.push(`/book-detail/${slug}/${chapter.chapter_name}?chapter_api_data=${chapter.chapter_api_data}`)
+        router.push(`/chapter?slug=${slug}&chapter_name=${chapter.chapter_name}&chapter_api_data=${chapter.chapter_api_data}`)
     }
-    const sortedChapters = useMemo(() => {
-        return [...chapters].sort((a, b) => {
-            const chapterNumberA = parseInt(a.chapter_name.replace(/^\D+/g, ''), 10)
-            const chapterNumberB = parseInt(b.chapter_name.replace(/^\D+/g, ''), 10)
-            return chapterNumberB - chapterNumberA
-        })
-    }, [chapters])
+    const sortedChapters = chapters.slice().reverse()
     return (
         <section className="pt-10">
             <hr className="bg-white max-w-6xl mx-auto" />

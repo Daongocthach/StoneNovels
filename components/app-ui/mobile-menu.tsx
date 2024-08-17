@@ -63,7 +63,7 @@ export default function MobileMenu() {
       >
         <ul className="bg-gray-800 px-4 py-2">
           <li>
-            <DropdownMenu />
+            <DropdownMenu isMenu={true}/>
           </li>
           <li>
             <Search />
