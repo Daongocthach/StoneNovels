@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Chapter } from '@/app/types/chapter'
-import { formatDistanceToNow, Locale } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { vi } from 'date-fns/locale'
 
 interface CardBookProps {
@@ -12,9 +12,10 @@ interface CardBookProps {
     slug: string
     updatedAt: string,
     chaptersLatest: Chapter[],
+    priority?: boolean
 }
 
-const CardBook: React.FC<CardBookProps> = ({ title, image_url, slug, updatedAt, chaptersLatest }) => {
+const CardBook: React.FC<CardBookProps> = ({ title, image_url, slug, updatedAt, chaptersLatest, priority }) => {
     const router = useRouter()
 
     const handleClick = () => {
@@ -33,8 +34,10 @@ const CardBook: React.FC<CardBookProps> = ({ title, image_url, slug, updatedAt, 
                     src={`${image_url}`}
                     alt={title}
                     fill
-                    className='rounded-xl'
+                    priority={priority}
                     unoptimized
+                    className='rounded-xl'
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: 'cover' }}
                 />
             </div>

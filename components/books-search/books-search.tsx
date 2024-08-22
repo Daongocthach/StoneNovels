@@ -18,13 +18,11 @@ function BooksSearch() {
     const [page, setPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const [books, setBooks] = useState<Book[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
     const searchParams = useSearchParams()
     const keyword = searchParams.get('keyword')
 
     useEffect(() => {
         const fetchBooks = async () => {
-            setLoading(true)
             if (keyword) {
                 try {
                     const response = await bookApi.searchBooks(keyword, page)
@@ -36,7 +34,6 @@ function BooksSearch() {
                     console.log('Failed to fetch books: ', error)
                 }
             }
-            setLoading(false)
         }
         fetchBooks()
     }, [keyword, page])

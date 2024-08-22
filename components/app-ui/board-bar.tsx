@@ -10,7 +10,7 @@ export default function BoardBar() {
             </li>
             <li>
                 <Link
-                    href="/books-category/action"
+                    href="/books-category?category=action"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                     Hành động
@@ -18,7 +18,7 @@ export default function BoardBar() {
             </li>
             <li>
                 <Link
-                    href="/books-category/xuyen-khong"
+                    href="/books-category?category=xuyen-khong"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                     Xuyên Không
@@ -26,7 +26,7 @@ export default function BoardBar() {
             </li>
             <li>
                 <Link
-                    href="/books-category/shounen"
+                    href="/books-category?category=shounen"
                     className="text-lg font-medium text-white hover:text-gray-300 px-4 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                     Thiếu niên

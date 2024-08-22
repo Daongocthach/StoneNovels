@@ -2,13 +2,18 @@
 import CardBook from '@/components/card-book'
 import CarouselListBook from '@/components/carousel-list-book'
 import { CarouselItem } from '@/components/ui/carousel'
+import { useRouter } from 'next/navigation'
 import bookApi from '@/app/api/books-api'
 import { useState, useEffect } from 'react'
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { CardBookModel } from '@/app/types/card-book-model'
 
 export default function BestCategory() {
+  const router = useRouter()
   const [books, setBooks] = useState<CardBookModel[]>([])
+  const handleClick = () => {
+    router.push(`/book-detail?slug=berserk`)
+  }
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -35,9 +40,8 @@ export default function BestCategory() {
             <p className="text-md rounded-md w-full line-clamp-2">Một trong những siêu phẩm của thời đại, Berserk mang dáng vóc của một thế giới rộng lớn trong bối cảnh thời kì Trung cổ châu Âu, cuộc chiến của những hiệp sĩ vĩ đại và thế lực đen tối huyền bí ma quỷ.
               Một tác phẩm kinh điển cho những ai đã từng đam mê “The Lord of The Ring” hoặc “Star War”, hoành tráng, dữ dội, vinh quang và nước mắt.</p>
             {/* Button */}
-            <div className='flex flex-row items-center gap-5'>
-              <p className="button border-2 text-md rounded-md inline px-4 py-1 ">Đọc ngay</p>
-              <p className="button border-2 text-md rounded-md inline px-4 py-1 ">Yêu thích</p>
+            <div className='flex flex-row items-center gap-5' onClick={handleClick}>
+              <p className="button border-2 text-md rounded-md inline px-4 py-1 cursor-pointer">Đọc ngay</p>
             </div>
           </div>
           {/* Image */}
@@ -50,7 +54,7 @@ export default function BestCategory() {
                 >
                   <div className='w-full h-auto max-w-[222px] aspect-[1/1.5] rounded-xl'>
                     <CardBook title={book?.name} slug={book?.slug} updatedAt={book?.updatedAt} chaptersLatest={book?.chaptersLatest}
-                      image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
+                      image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} priority={true}/>
                   </div>
                 </CarouselItem>
               ))}

@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import bookApi from '@/app/api/books-api'
 import { Book } from '@/app/types/book'
-import Loading from '@/components/loading'
 import CardBook from '@/components/card-book'
 import {
     Pagination,
@@ -19,13 +18,11 @@ function BooksCategory() {
     const [page, setPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const [books, setBooks] = useState<Book[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
     const searchParams = useSearchParams()
     const category = searchParams.get('category')
 
     useEffect(() => {
         const fetchBooks = async () => {
-            setLoading(true)
             if (category) {
                 try {
                     const response = await bookApi.getBooksByCategory(category, page)
@@ -37,7 +34,6 @@ function BooksCategory() {
                     console.log('Failed to fetch books: ', error)
                 }
             }
-            setLoading(false)
         }
         fetchBooks()
     }, [category, page])

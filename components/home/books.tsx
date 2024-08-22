@@ -35,6 +35,7 @@ export default function Books() {
               className="flex-grow flex-shrink-0 min-w-[160px] w-[calc(16.6667%-12px)] aspect-[1/1.5] rounded-xl mb-4"
             >
               <CardBook
+                priority={false}
                 title={book?.name}
                 slug={book?.slug}
                 image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url}

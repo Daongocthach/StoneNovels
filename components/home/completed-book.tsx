@@ -36,7 +36,7 @@ export default function CompletedBook() {
                   <CarouselItem key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                     <div className='w-full h-auto max-w-[222px] aspect-[1/1.5] rounded-xl'>
                       <CardBook title={book?.name} slug={book?.slug} updatedAt={book?.updatedAt} chaptersLatest={book?.chaptersLatest}
-                        image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} />
+                        image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} priority={false}/>
                     </div>
                   </CarouselItem>
                 ))}
