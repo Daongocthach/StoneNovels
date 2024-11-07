@@ -1,6 +1,7 @@
 import { Category } from "@/app/types/category"
 import { Chapter } from "@/app/types/chapter"
 export type Book = {
+    id?: string
     _id: string
     name: string
     slug: string
@@ -13,12 +14,7 @@ export type Book = {
     category: Category[]
     chapters: {
         server_name: string
-        server_data: {
-            filename: string
-            chapter_name: string
-            chapter_title: string
-            chapter_api_data: string
-        }[]
+        server_data: Chapter[]
     }[]
     updatedAt: string,
     chaptersLatest: Chapter[]

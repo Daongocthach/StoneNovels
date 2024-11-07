@@ -10,6 +10,5 @@ export default function Page() {
     <Suspense fallback={<Loading />}>
       <Content />
     </Suspense>
-
   )
 }

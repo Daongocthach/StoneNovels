@@ -85,7 +85,6 @@ function BooksCategory() {
     return (
         <section className="pt-40">
             <div className='max-w-6xl mx-auto '>
-                {/* Category Name */}
                 <div className='w-full flex flex-row items-center gap-2 px-1 sm:px-5 py-2 bg-gray-800 rounded-md'>
                     <h3 className="text-2xl">Danh sách truyện {category}</h3>
                 </div>
