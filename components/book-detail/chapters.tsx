@@ -1,17 +1,17 @@
 import { Chapter } from '@/app/types/chapter'
 import { useRouter } from 'next/navigation'
-import { useMemo } from 'react'
 
 interface ChaptersProps {
+    book_name: string,
     chapters: Chapter[],
-    slug: string
+    id: string
 }
 
-function Chapters({ chapters, slug }: ChaptersProps) {
+function Chapters({ book_name, chapters, id }: ChaptersProps) {
     const router = useRouter()
 
     const handleClick = (chapter: Chapter) => {
-        router.push(`/chapter?slug=${slug}&chapter_name=${chapter.chapter_name}&chapter_api_data=${chapter.chapter_api_data}`)
+        router.push(`/chapter?book_name=${book_name}&id=${id}&chapter_name=${chapter.chapter_name}&chapter_api_data=${encodeURIComponent(chapter.chapter_api_data)}`)
     }
     const sortedChapters = chapters.slice().reverse()
     return (

@@ -3,31 +3,33 @@ import CardBook from '@/components/card-book'
 import CarouselListBook from '@/components/carousel-list-book'
 import { CarouselItem } from '@/components/ui/carousel'
 import { useRouter } from 'next/navigation'
-import bookApi from '@/app/api/books-api'
 import { useState, useEffect } from 'react'
 import { ChevronDownIcon } from "@radix-ui/react-icons"
-import { CardBookModel } from '@/app/types/card-book-model'
+import { getBooks } from '@/app/api/book-fire-api'
+import { Book } from '@/app/types'
 
 export default function BestCategory() {
   const router = useRouter()
-  const [books, setBooks] = useState<CardBookModel[]>([])
+  const [books, setBooks] = useState<Book[]>([])
   const handleClick = () => {
     router.push(`/book-detail?slug=berserk`)
   }
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await bookApi.getBooksByStatus('sap-ra-mat', 1)
-        setBooks(response?.data?.items)
+        const booksData = await getBooks()
+        console.log('Danh sách sách: ', booksData)
+        setBooks(booksData || [])
       } catch (error) {
-        console.log('Failed to fetch books: ', error)
+        console.error('Lỗi khi lấy danh sách sách: ', error)
+      } finally {
       }
     }
     fetchBooks()
   }, [])
   return (
     <section>
-      <div className='pt-10 max-w-6xl mx-auto '>
+      <div className='pt-10'>
         {/* Category Name */}
         <div className='w-full flex flex-row items-center gap-2 px-1 sm:px-5 py-2 bg-gray-800 rounded-md'>
           <h3 className="text-2xl">Yêu thích nhất</h3>
@@ -54,7 +56,7 @@ export default function BestCategory() {
                 >
                   <div className='w-full h-auto max-w-[222px] aspect-[1/1.5] rounded-xl'>
                     <CardBook title={book?.name} slug={book?.slug} updatedAt={book?.updatedAt} chaptersLatest={book?.chaptersLatest}
-                      image_url={'https://img.otruyenapi.com/uploads/comics/' + book?.thumb_url} priority={true}/>
+                      image_url={book?.thumb_url} priority={true}/>
                   </div>
                 </CarouselItem>
               ))}

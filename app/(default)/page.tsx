@@ -10,11 +10,11 @@ import Books from '@/components/home/books'
 
 export default function Home() {
   return (
-    <>
+    <div className='mt-5'>
       <Newest />
       <BestCategory />
       <CompletedBook />
       <Books/>
-    </>
+    </div>
   )
 }

@@ -10,10 +10,9 @@ export const metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <section className="pt-40">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl font-bold mb-4">Quản lý sách</h1>
-          <BookList /> {/* Sử dụng component BookList */}
+      <section className="pt-2">
+        <div>
+          <BookList />
         </div>
       </section>
     </Suspense>

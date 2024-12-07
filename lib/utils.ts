@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export async function convertTextToPdfFile(content: string): Promise<File> {
+export async function convertTextToPdfFile(content: string, filename: string): Promise<File> {
   const pdfDoc = await PDFDocument.create()
   pdfDoc.registerFontkit(fontkit)
 
@@ -41,7 +41,7 @@ export async function convertTextToPdfFile(content: string): Promise<File> {
 
   const pdfBytes = await pdfDoc.save()
 
-  return new File([pdfBytes], "bookContent.pdf", { type: "application/pdf" })
+  return new File([pdfBytes], filename || "bookContent.pdf", { type: "application/pdf" })
 }
 
 export function convertToSlug(text: string) {

@@ -1,10 +1,10 @@
 'use client'
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
-import categoryApi from "@/app/api/category-api"
 import { useState, useEffect } from "react"
 import { Category } from "@/app/types/category"
 import { useRouter } from 'next/navigation'
+import { getCategories } from "@/app/api/category-fire-api"
 
 export default function DropdownMenu({ isMenu }: { isMenu: boolean }) {
     const router = useRouter()
@@ -13,8 +13,8 @@ export default function DropdownMenu({ isMenu }: { isMenu: boolean }) {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await categoryApi.getCategories()
-                setCategories(response?.data?.items)
+                const response = await getCategories()
+                setCategories(response || [])
             }
             catch (error) {
                 console.log('Failed to fetch categories: ', error)
@@ -41,7 +41,7 @@ export default function DropdownMenu({ isMenu }: { isMenu: boolean }) {
                     ) : (
                         <div
                             role="button" aria-label="Some label"
-                            className="text-lg font-medium text-orange-500 hover:text-gray-300 flex items-center gap-1 cursor-pointer"
+                            className="text-xl py-4 pl-2 font-medium text-white hover:text-gray-300 flex items-center gap-1 cursor-pointer"
                         >
                             Thể loại
                             <ChevronDownIcon className="h-4 w-4" />
@@ -52,7 +52,8 @@ export default function DropdownMenu({ isMenu }: { isMenu: boolean }) {
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
                         {(Array.isArray(categories) && categories.length > 0) ?
                             categories.map((category: Category, index: number) => (
-                                <div key={index} className="space-y-2 cursor-pointer" onClick={() => handleClick(category?.slug)}>
+                                <div key={index} className="space-y-2 cursor-pointer"
+                                    onClick={() => handleClick(category?.slug)}>
                                     <p className="text-sm flex-grow text-muted-foreground hover:text-orange-100">
                                         {category?.name}
                                     </p>

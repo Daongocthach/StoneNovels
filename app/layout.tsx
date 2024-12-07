@@ -43,7 +43,7 @@ export default function RootLayout({
           draggable
           pauseOnHover
         />
-        <div className="flex flex-col min-h-screen overflow-hidden">
+        <div className="max-w-6xl mx-auto sm:px-6 px-2 lg:px-0">
           <Header />
           {children}
         </div>

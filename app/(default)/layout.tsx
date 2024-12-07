@@ -20,6 +20,7 @@ export default function DefaultLayout({
       disable: 'phone',
       duration: 600,
       easing: 'ease-out-sine',
+      mirror: false
     })
   })
 
@@ -27,7 +28,7 @@ export default function DefaultLayout({
     <>
       <main className="grow">
 
-        <PageIllustration />
+        {/* <PageIllustration /> */}
 
         {children}
 

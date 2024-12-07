@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation'
 import { Chapter } from '@/app/types/chapter'
 import { formatDistanceToNow } from 'date-fns'
 import { vi } from 'date-fns/locale'
+import { Book } from '@/app/types'
 
 interface CardBookProps {
+    book?: Book
     title: string
     image_url: string
     slug: string
@@ -15,17 +17,18 @@ interface CardBookProps {
     priority?: boolean
 }
 
-const CardBook: React.FC<CardBookProps> = ({ title, image_url, slug, updatedAt, chaptersLatest, priority }) => {
+const CardBook: React.FC<CardBookProps> = ({ book, title, image_url, slug, updatedAt, chaptersLatest, priority }) => {
     const router = useRouter()
 
     const handleClick = () => {
-        router.push(`/book-detail?slug=${slug}`)
+        if (book?.id)
+            router.push(`/book-detail?id=${book?.id}`)
     }
     const handleChapterClick = () => {
         if (!Array.isArray(chaptersLatest) || chaptersLatest.length === 0) return
-        router.push(`/chapter?slug=${slug}&chapter_name=${chaptersLatest[0].chapter_name}&chapter_api_data=${chaptersLatest[0].chapter_api_data}`)
+        router.push(`/chapter?book_name=${book?.name}&id=${book?.id}&chapter_name=${chaptersLatest[0].chapter_name}&chapter_api_data=${encodeURIComponent(book?.chaptersLatest[0]?.chapter_api_data || '')}`)
     }
-    const date = new Date(updatedAt)
+    const date = updatedAt ? new Date(updatedAt) : new Date()
     const result = formatDistanceToNow(date, { locale: vi })
     return (
         <div className='relative w-full max-w-[222px] cursor-pointer'>
@@ -44,7 +47,7 @@ const CardBook: React.FC<CardBookProps> = ({ title, image_url, slug, updatedAt, 
             <p className='absolute top-2 left-2 min-w-20 p-0.5 rounded-md bg-orange-600 flex-col flex items-center line-clamp-1 text-xs text-center text-white capitalize'>
                 {result}
             </p>
-            <div className='absolute bottom-0 w-full bg-black rounded-b-xl opacity-90 flex-col flex items-center'>
+            <div className='absolute bottom-0 w-full bg-gray-700 rounded-b-xl opacity-90 flex-col flex items-center'>
                 <p className='line-clamp-1 text-center uppercase text-sm font-semibold'>
                     {title}
                 </p>

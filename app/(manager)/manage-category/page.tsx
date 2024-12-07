@@ -10,8 +10,8 @@ export const metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <section className="pt-40">
-        <div className="container mx-auto px-4">
+      <section className="pt-2">
+        <div>
           <CategoryList />
         </div>
       </section>

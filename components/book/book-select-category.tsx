@@ -36,12 +36,12 @@ function BookSelectCategory({ categoriesSelected, setCategoriesSelected }: BookS
         setCategoriesSelected(categoriesSelected.filter(item => item.id !== category.id))
     }
     return (
-        <div>
+        <div className="flex flex-row items-center flex-wrap py-2 px-4 bg-gray-700 rounded-md">
             <Popover>
                 <PopoverTrigger asChild>
                     <Button variant="outline">Chọn danh mục</Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-full bg-gray-700">
+                <PopoverContent className="w-full bg-gray-700 max-h-80 overflow-y-scroll">
                     <ul>
                         {Array.isArray(categories) && categories.length > 0 && categories.map((category) => (
                             <li key={category.id}
@@ -63,7 +63,7 @@ function BookSelectCategory({ categoriesSelected, setCategoriesSelected }: BookS
                     </ul>
                 </PopoverContent>
             </Popover>
-            <div className="mt-2 flex flex-row items-center py-2 px-4 bg-gray-700">
+            <div className="flex flex-row items-center ml-2">
                 {categoriesSelected.length > 0 ? (
                     <div className="flex flex-row items-center">
                         <span className="text-white">Đã chọn ({categoriesSelected.length || 0}): </span>

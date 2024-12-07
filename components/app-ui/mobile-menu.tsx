@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import Link from 'next/link'
 import DropdownMenu from '@/components/dropdown-menu'
 import Search from '@/components/app-ui/search'
 
@@ -11,7 +10,6 @@ export default function MobileMenu() {
   const trigger = useRef<HTMLButtonElement>(null)
   const mobileNav = useRef<HTMLDivElement>(null)
 
-  // close the mobile menu on click outside
   useEffect(() => {
     const clickHandler = ({ target }: { target: EventTarget | null }): void => {
       if (!mobileNav.current || !trigger.current) return;
@@ -22,7 +20,6 @@ export default function MobileMenu() {
     return () => document.removeEventListener('click', clickHandler)
   })
 
-  // close the mobile menu if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: { keyCode: number }): void => {
       if (!mobileNavOpen || keyCode !== 27) return;
@@ -34,7 +31,6 @@ export default function MobileMenu() {
 
   return (
     <div className="md:hidden">
-      {/* Hamburger button */}
       <button
         ref={trigger}
         className={`hamburger ${mobileNavOpen && 'active'}`}

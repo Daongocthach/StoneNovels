@@ -10,8 +10,8 @@ export const metadata = {
 export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
-      <section className="pt-40">
-        <div className="max-w-6xl mx-auto">
+      <section>
+        <div>
           <h1 className="text-2xl font-bold mb-4">Thêm sách mới</h1>
           <AddBookForm />
         </div>

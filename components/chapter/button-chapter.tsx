@@ -1,54 +1,55 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { ChevronLeftIcon, ChevronRightIcon, ReaderIcon } from "@radix-ui/react-icons"
+import { ChevronLeftIcon, ChevronRightIcon, LayoutIcon } from "@radix-ui/react-icons"
 import { useRouter } from 'next/navigation'
-import bookApi from '@/app/api/books-api'
+import { getBookById, getBookBySlug } from '@/app/api/book-fire-api'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Chapter } from '@/app/types/chapter'
 
-function ButtonChapter({ slug, chapter_name }: { slug: string, chapter_name: string }) {
+interface ButtonChapterProps {
+    book_name: string,
+    id: string,
+    chapter_name: string,
+}
+
+function ButtonChapter({ book_name, id, chapter_name }: ButtonChapterProps) {
     const router = useRouter()
     const [chapters, setChapters] = useState<Chapter[]>([])
     const [original_chapters, setOriginalChapters] = useState<Chapter[]>([])
     const [isStart, setIsStart] = useState(false)
     const [isEnd, setIsEnd] = useState(false)
-    const [open, setOpen] =  useState(false)
+    const [open, setOpen] = useState(false)
     const [currentIndex, setCurrentIndex] = useState<number | null>(null)
 
     useEffect(() => {
-        const fetchBook = async () => {
-            if (slug) {
+        const fetchData = async () => {
+            if (id) {
                 try {
-                    const response = await bookApi.getBook(slug)
-                    const books = response?.data?.item
-                    if (Array.isArray(books?.chapters) && books?.chapters.length > 0) {
-                        const chapters = books?.chapters[0].server_data
-                        const sortedChapters = chapters.slice().reverse()
-                        const chapterIndex = chapters.findIndex((chapter: Chapter) => chapter.chapter_name === chapter_name)
-
-                        setCurrentIndex(chapterIndex)
-                        setIsStart(chapterIndex === 0)
-                        setIsEnd(chapterIndex === chapters.length - 1)
-
-                        setChapters(sortedChapters)
-                        setOriginalChapters(chapters)
-                    }
+                    const book = await getBookById(id)
+                    const chapters = book?.chapters
+                    setOriginalChapters(chapters ?? [])
+                    const sortedChapters = chapters?.slice().reverse()
+                    const chapterIndex = chapters?.findIndex((chapter: Chapter) => chapter.chapter_name === chapter_name)
+                    setCurrentIndex(chapterIndex ?? null)
+                    setIsStart(chapterIndex === 0)
+                    setIsEnd(chapterIndex === (chapters?.length ?? 0) - 1)
+                    setChapters(sortedChapters ?? [])
                 } catch (error) {
                     console.log('Failed to fetch book: ', error)
                 }
             }
         }
-        fetchBook()
-    }, [slug, chapter_name])
+        fetchData()
+    }, [chapter_name])
 
     const handleChapterClick = (chapter: Chapter) => {
-        router.push(`/chapter?slug=${slug}&chapter_name=${chapter.chapter_name}&chapter_api_data=${chapter.chapter_api_data}`)
+        router.push(`/chapter?book_name=${book_name}&id=${id}&chapter_name=${chapter.chapter_name}&chapter_api_data=${encodeURIComponent(chapter.chapter_api_data)}`)
         setOpen(false)
     }
 
     const handlePrevious = () => {
         if (currentIndex !== null && currentIndex > 0) {
-            const previousChapter =original_chapters[currentIndex - 1]
+            const previousChapter = original_chapters[currentIndex - 1]
             handleChapterClick(previousChapter)
         }
     }
@@ -62,18 +63,20 @@ function ButtonChapter({ slug, chapter_name }: { slug: string, chapter_name: str
 
     return (
         <div className='flex flex-row items-center gap-2'>
-            <Button variant={'destructive'} disabled={isStart} className='bg-red-600 text-white' onClick={handlePrevious}>
+            <Button variant={'destructive'} disabled={isStart}
+                className={`${isStart ? 'bg-gray-500' : 'bg-red-600'} text-white rounded-l-xl rounded-r-none`}
+                onClick={handlePrevious}>
                 <ChevronLeftIcon className="h-4 w-4" /> Trước
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild >
-                    <div className='bg-red-700 text-white rounded-md p-2 flex flex-row items-center cursor-pointer'>
-                        Danh sách chương
+                <DialogTrigger asChild>
+                    <div className='bg-red-600 text-white py-2.5 px-4 flex flex-row items-center cursor-pointer'>
+                        <LayoutIcon className="h-4 w-4" />
                     </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] bg-white text-black" >
+                <DialogContent className="sm:max-w-[425px] bg-white text-black" aria-describedby={undefined}>
                     <DialogHeader>
-                        <DialogTitle>{slug}</DialogTitle>
+                        <DialogTitle>{'Danh sách chương'}</DialogTitle>
                     </DialogHeader>
                     <div className='max-h-64 overflow-y-auto'>
                         {Array.isArray(chapters) && chapters.length > 0 && chapters.map((chapter, index) => (
@@ -90,8 +93,9 @@ function ButtonChapter({ slug, chapter_name }: { slug: string, chapter_name: str
                     </div>
                 </DialogContent>
             </Dialog>
-
-            <Button className='bg-red-600 text-white' disabled={isEnd} onClick={handleNext}>
+            <Button variant={'destructive'}
+                className={`${isEnd ? 'bg-gray-500' : 'bg-red-600'} text-white rounded-r-xl rounded-l-none`}
+                disabled={isEnd} onClick={handleNext}>
                 Tiếp <ChevronRightIcon className="h-4 w-4" />
             </Button>
         </div>

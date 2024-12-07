@@ -17,13 +17,6 @@ function AddBasicInformation({ bookData, handleInputChange } : AddBasicInformati
           required className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-black" />
       </div>
       <div className="mb-4">
-        <label htmlFor="author" className="block text-sm font-medium text-white">
-          <span className="text-red-500">*</span> Tác giả
-        </label>
-        <input type="text" id="author" name="author" value={bookData.author} onChange={handleInputChange}
-          required className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-black" />
-      </div>
-      <div className="mb-4">
         <label htmlFor="content" className="block text-sm font-medium text-white">
           <span className="text-red-500">*</span> Mô tả
         </label>

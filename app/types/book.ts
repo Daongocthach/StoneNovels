@@ -12,10 +12,7 @@ export type Book = {
     sub_docquyen: boolean
     author: string[]
     category: Category[]
-    chapters: {
-        server_name: string
-        server_data: Chapter[]
-    }[]
+    chapters: Chapter[]
     updatedAt: string,
     chaptersLatest: Chapter[]
 }

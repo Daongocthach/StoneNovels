@@ -5,6 +5,15 @@ import { Category } from '@/app/types'
 import DialogCategory from '@/components/category/dialog-category'
 import { Button } from '@/components/ui/button'
 import { toast } from 'react-toastify'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog"
 
 export default function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([
@@ -93,13 +102,29 @@ export default function CategoryList() {
         </div>
         <ul className='mt-4'>
           {categories.map((category) => (
-            <li key={category.id} className="mb-4 p-4 border border-gray-300 rounded-md flex items-center justify-between">
+            <li key={category.id} className="mb-2 p-2 border border-gray-300 rounded-md flex items-center justify-between">
               <span>
                 <strong>{category.name}</strong>
               </span>
               <div>
                 <DialogCategory updateCategory={category} handleUpdateCategory={handleUpdateCategory} />
-                <Button onClick={() => handleDeleteCategory(category.id)} className="ml-2 p-2 bg-red-700 text-white rounded">Xóa</Button>
+                <Dialog>
+                  <DialogTrigger>
+                    <div className="ml-2 p-2 bg-red-500 text-white rounded">Xóa</div>
+                  </DialogTrigger>
+                  <DialogContent className='bg-gray-800'>
+                    <DialogHeader>
+                      <DialogTitle>Xóa thể loại này?</DialogTitle>
+                      <DialogDescription>
+                        Bạn chắc chắn xóa, không thể hoàn tác!
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <Button type="submit" className='bg-gray-700' onClick={() => handleDeleteCategory(category.id)}>Xóa</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
               </div>
             </li>
           ))}

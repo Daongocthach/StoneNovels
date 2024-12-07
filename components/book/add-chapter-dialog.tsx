@@ -1,7 +1,6 @@
 'use client'
-import { useState, ChangeEvent, FormEvent } from "react"
-import { addBook } from "@/app/api/book-fire-api"
-import { convertTextToPdfFile } from "@/lib/utils"
+import { useState, ChangeEvent } from "react"
+import { convertTextToPdfFile, convertToSlug } from "@/lib/utils"
 import { Chapter } from "@/app/types"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,8 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
 import { Book } from "@/app/types"
+import { Cross2Icon, PlusCircledIcon } from "@radix-ui/react-icons"
 
 type AddChapterDialogProps = {
   bookData: Book
@@ -34,35 +35,34 @@ export default function AddChapterDialog({ bookData, setBookData }: AddChapterDi
     let file = pdfFile
     if (!chapterName.trim()) return
     if (!isPdfSelected && !pdfFile) {
-      const contentToPdf = await convertTextToPdfFile(content)
+      const contentToPdf = await convertTextToPdfFile(content, convertToSlug(chapterName) || '')
       file = contentToPdf
     }
     const newChapter = {
-      server_name: "New Server",
-      server_data: [
-        {
           chapter_name: chapterName,
           filename: file?.name || "",
           chapter_title: "",
           chapter_api_data: file
         }
-      ]
-    }
+    
     const updatedBookData = {
       ...bookData,
-      chapters: [...bookData.chapters, newChapter as unknown as { server_name: string; server_data: Chapter[] }]
+      chapters: [...bookData.chapters, newChapter] as Chapter[]
     }
     setBookData(updatedBookData)
     setOpen(false)
   }
   return (
     <Dialog open={open}>
-      <DialogTrigger asChild onClick={() => setOpen(true)}>
-        <Button variant="outline" >Thêm chương</Button>
+      <DialogTrigger className="my-1" asChild onClick={() => setOpen(true)} >
+        <PlusCircledIcon className="h-6 w-6 text-white cursor-pointer " />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[425px] bg-gray-700" >
+        <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle>Thêm chương</DialogTitle>
+          <DialogClose asChild onClick={() => setOpen(false)} className="cursor-pointer absolute right-4 top-3 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <Cross2Icon className="h-4 w-4" />
+          </DialogClose>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="bg-gray-800 p-4 rounded shadow-md">
           <div className="mb-4">
@@ -100,7 +100,9 @@ export default function AddChapterDialog({ bookData, setBookData }: AddChapterDi
           )}
         </form>
         <DialogFooter>
-          <Button className="bg-gray-800" onClick={() => handleSubmit()}>Thêm</Button>
+          <Button className="bg-gray-800" onClick={handleSubmit}>
+            Thêm
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
