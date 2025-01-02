@@ -23,17 +23,20 @@ export default function BookList() {
   const handleClick = (id: string) => {
     router.push(`/book-detail?id=${id}`)
   }
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const booksData = await getBooks()
-        setBooks(booksData || [])
-      } catch (error) {
-        console.error('Lỗi khi lấy danh sách sách: ', error)
-      } finally {
-        setIsLoading(false)
-      }
+  
+  const fetchBooks = async () => {
+    try {
+      const booksData = await getBooks()
+      setBooks(booksData || [])
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách sách: ', error)
+    } finally {
+      setIsLoading(false)
     }
+  }
+
+  useEffect(() => {
+
     fetchBooks()
   }, [])
 
@@ -121,10 +124,10 @@ export default function BookList() {
                     </button>
                     <Dialog>
                       <DialogTrigger>
-                        <button className="p-2 bg-red-500 text-white rounded-md flex flex-row items-center gap-2">
+                        <div className="p-2 bg-red-500 text-white rounded-md flex flex-row items-center gap-2 cursor-pointer hover:bg-red-400">
                           <TrashIcon className="h-5 w-5" />
                           Xóa
-                        </button>
+                        </div>
                       </DialogTrigger>
                       <DialogContent className='bg-gray-800'>
                         <DialogHeader>
