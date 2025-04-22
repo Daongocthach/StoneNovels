@@ -4,8 +4,8 @@ import { ChevronUpIcon, PlayIcon, PauseIcon, StopIcon } from "@radix-ui/react-ic
 import { useSearchParams } from 'next/navigation'
 import ButtonChapter from '@/components/chapter/button-chapter'
 import { pdfjs } from 'react-pdf'
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+
 
 function Content() {
     const searchParams = useSearchParams()

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ChevronLeftIcon, ChevronRightIcon, LayoutIcon } from "@radix-ui/react-icons"
 import { useRouter } from 'next/navigation'
-import { getBookById, getBookBySlug } from '@/app/api/book-fire-api'
+import { getBookById } from '@/app/api/book-fire-api'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Chapter } from '@/app/types/chapter'
 
